@@ -17,6 +17,7 @@ pub mod info;
 pub mod input;
 pub mod keyboard;
 pub mod register;
+pub mod tabs;
 pub mod theme;
 pub mod tree;
 pub mod view;
@@ -42,6 +43,7 @@ impl std::fmt::Display for DocumentId {
 
 slotmap::new_key_type! {
     pub struct ViewId;
+    pub struct TabId;
 }
 
 pub enum Align {
