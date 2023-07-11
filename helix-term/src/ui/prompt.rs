@@ -298,7 +298,7 @@ impl Prompt {
     ) {
         (self.callback_fn)(cx, &self.line, PromptEvent::Abort);
         let mut values = match cx.editor.registers.read(register, cx.editor) {
-            Some(values) if values.len() > 0 => values,
+            Some(values) if values.len() > 0 => values.rev(),
             _ => return,
         };
 
@@ -461,7 +461,7 @@ impl Prompt {
             // latest value in the register list
             match self
                 .history_register
-                .and_then(|reg| cx.editor.registers.last(reg, cx.editor))
+                .and_then(|reg| cx.editor.registers.first(reg, cx.editor))
             {
                 Some(value) => (value, true),
                 None => (Cow::from(""), false),
@@ -560,7 +560,7 @@ impl Component for Prompt {
                 } else {
                     let last_item = self
                         .history_register
-                        .and_then(|reg| cx.editor.registers.last(reg, cx.editor))
+                        .and_then(|reg| cx.editor.registers.first(reg, cx.editor))
                         .map(|entry| entry.to_string())
                         .unwrap_or_else(|| String::from(""));
 
